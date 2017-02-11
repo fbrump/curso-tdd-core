@@ -12,9 +12,9 @@ namespace Caelum.Leilao
 
             Leilao leilao = new Leilao("Playstation 3 Novo");
 
-            leilao.Propoe(new Lance(joao, 300.0));
-            leilao.Propoe(new Lance(jose, 500.0));
             leilao.Propoe(new Lance(maria, 250.0));
+            leilao.Propoe(new Lance(joao, 300.0));
+            leilao.Propoe(new Lance(jose, 400.0));
 
             Avaliador leiloeiro = new Avaliador();
             leiloeiro.Avalia(leilao);
