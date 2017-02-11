@@ -7,8 +7,8 @@ namespace Caelum.Leilao
 
     public class Avaliador
     {
-        public double maiorDeTodos = Double.MinValue;
-        public double menorDeTodos = Double.MaxValue;
+        private double maiorDeTodos = Double.MinValue;
+        private double menorDeTodos = Double.MaxValue;
 
         public void Avalia(Leilao leilao)
         {
