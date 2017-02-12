@@ -30,6 +30,6 @@ namespace Caelum.Leilao.Test
             Assert.Equal(maiorEsperado, leiloeiro.MaiorLance);
             Assert.Equal(menorEsperado, leiloeiro.MenorLance);
         }
-        
+
     }
 }
