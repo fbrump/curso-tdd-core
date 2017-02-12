@@ -125,6 +125,33 @@ namespace Caelum.Leilao.Test
         }
 
         [Fact]
+        public void Should_process_code_with_throws_deascending_order()
+        {
+            //Given
+            Usuario joao = new Usuario("Joao");
+            Usuario maria = new Usuario("Maria");
+
+            Leilao leilao = new Leilao("Playstation 3 Novo");
+
+            leilao.Propoe(new Lance(joao, 400.0));
+            leilao.Propoe(new Lance(maria, 300.0));
+            leilao.Propoe(new Lance(joao, 200.0));
+            leilao.Propoe(new Lance(maria, 100.0));
+
+            //When
+            Avaliador leiloeiro = new Avaliador();
+            leiloeiro.Avalia(leilao);
+
+            var maiores = leiloeiro.TresMaiores;
+            //Then
+            Assert.Equal(100, leiloeiro.MenorLance);
+            Assert.Equal(400, leiloeiro.MaiorLance);
+            Assert.Equal(400, maiores[0].Valor);
+            Assert.Equal(300, maiores[1].Valor);
+            Assert.Equal(200, maiores[2].Valor);
+        }
+
+        [Fact]
         public void Should_return_palindrome_is_true()
         {
             //Given
