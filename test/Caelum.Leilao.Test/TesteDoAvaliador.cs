@@ -81,6 +81,50 @@ namespace Caelum.Leilao.Test
         }
 
         [Fact]
+        public void Shouldprocess_code_with_one_throw()
+        {
+            //Given
+            Usuario joao = new Usuario("Joao");
+
+            Leilao leilao = new Leilao("Playstation 3 Novo");
+
+            leilao.Propoe(new Lance(joao, 200));
+            //When
+            Avaliador leiloeiro = new Avaliador();
+            leiloeiro.Avalia(leilao);
+            
+            //Then
+            Assert.Equal(200, leiloeiro.MaiorLance, 2);
+            Assert.Equal(200, leiloeiro.MenorLance, 2);
+            Assert.Equal(200, leiloeiro.MediaLance, 2);
+        }
+
+        [Fact]
+        public void Should_process_code_with_random_values()
+        {
+            //Given
+            Usuario joao = new Usuario("Joao");
+            Usuario maria = new Usuario("Maria");
+
+            Leilao leilao = new Leilao("Playstation 3 Novo");
+
+            leilao.Propoe(new Lance(joao, 200.0));
+            leilao.Propoe(new Lance(maria, 450.0));
+            leilao.Propoe(new Lance(joao, 120.0));
+            leilao.Propoe(new Lance(maria, 700.0));
+            leilao.Propoe(new Lance(joao, 630.0));
+            leilao.Propoe(new Lance(maria, 230.0));
+
+            //When
+            Avaliador leiloeiro = new Avaliador();
+            leiloeiro.Avalia(leilao);
+
+            //Then
+            Assert.Equal(120, leiloeiro.MenorLance);
+            Assert.Equal(700, leiloeiro.MaiorLance);
+        }
+
+        [Fact]
         public void Should_return_palindrome_is_true()
         {
             //Given
