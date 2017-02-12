@@ -4,7 +4,7 @@ namespace Caelum.Leilao.Test
     using Xunit;
     using Caelum.Leilao;
 
-    public class UnitTest1
+    public class TesteDoAvaliador
     {
         [Fact]
         public void Should_process_code()
@@ -33,6 +33,24 @@ namespace Caelum.Leilao.Test
             Assert.Equal(menorEsperado, leiloeiro.MenorLance);
             Assert.Equal(mediaEsperada, Math.Ceiling(leiloeiro.MediaLance));
 
+        }
+        
+        [Fact]
+        public void Should_understand_auction_with_just_one_throw()
+        {
+            //Given
+            Usuario joao = new Usuario("Joao");
+            Leilao leilao = new Leilao("Playstation 3 Novo");
+
+            leilao.Propoe(new Lance(joao, 1000));
+
+            //When
+            Avaliador leiloeiro = new Avaliador();
+            leiloeiro.Avalia(leilao);
+            
+            //Then
+            Assert.Equal(1000, leiloeiro.MaiorLance);
+            Assert.Equal(1000, leiloeiro.MenorLance);
         }
 
         [Fact]
