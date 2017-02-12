@@ -36,17 +36,31 @@ namespace Caelum.Leilao.Test
         }
 
         [Fact]
-        public void Should_return_palindrome()
+        public void Should_return_palindrome_is_true()
         {
             //Given
-            var frase = "civic";
+            var frase_civic = "civic";
 
             //When
             Palindromo palindrome = new Palindromo();
-            var result = palindrome.EhPalindromo(frase);
+            var result_true = palindrome.EhPalindromo(frase_civic);
 
             //Then
-            Assert.Equal(true, result);
+            Assert.Equal(true, result_true);
+        }
+
+        [Fact]
+        public void Should_return_palindrome_is_false()
+        {
+            //Given
+            var frase_resultado = "resultado";
+
+            //When
+            Palindromo palindrome = new Palindromo();
+            var result_false = palindrome.EhPalindromo(frase_resultado);
+
+            //Then
+            Assert.False(result_false);
         }
 
     }
