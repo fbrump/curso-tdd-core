@@ -3,6 +3,9 @@ namespace Caelum.Leilao.Test
     using System;
     using Xunit;
     using Caelum.Leilao;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Linq;
 
     public class TesteDoAvaliador
     {
@@ -152,6 +155,116 @@ namespace Caelum.Leilao.Test
         }
 
         [Fact]
+        public void Should_find_three_max_values_in_five_throws()
+        {
+            //Given
+            Usuario joao = new Usuario("Joao");
+            Usuario maria = new Usuario("Maria");
+            Leilao leilao = new Leilao("Playstation 3 Novo");
+
+            leilao.Propoe(new Lance(joao, 100.0));
+            leilao.Propoe(new Lance(maria, 200.0));
+            leilao.Propoe(new Lance(joao, 300.0));
+            leilao.Propoe(new Lance(maria, 340.0));
+            leilao.Propoe(new Lance(joao, 400.0));
+
+            //When
+            Avaliador leiloeiro = new Avaliador();
+            leiloeiro.Avalia(leilao);
+
+            var maiores = leiloeiro.TresMaiores;
+
+            //Then
+            Assert.Equal(3, maiores.Count);
+            Assert.Equal(400, maiores[0].Valor, 2);
+            Assert.Equal(340, maiores[1].Valor, 2);
+            Assert.Equal(300, maiores[2].Valor, 2);
+        }
+
+        [Fact]
+        public void Should_find_max_values_in_two_throws()
+        {
+            //Given
+            Usuario joao = new Usuario("Joao");
+            Usuario maria = new Usuario("Maria");
+            Leilao leilao = new Leilao("Playstation 3 Novo");
+
+            leilao.Propoe(new Lance(joao, 100.0));
+            leilao.Propoe(new Lance(maria, 200.0));
+
+            //When
+            Avaliador leiloeiro = new Avaliador();
+            leiloeiro.Avalia(leilao);
+
+            var maiores = leiloeiro.TresMaiores;
+
+            //Then
+            Assert.Equal(2, maiores.Count);
+            Assert.Equal(200, maiores[0].Valor, 2);
+            Assert.Equal(100, maiores[1].Valor, 2);
+        }
+
+        [Fact]
+        public void Should_find_max_values_in_zero_throws()
+        {
+            //Given
+            Usuario joao = new Usuario("Joao");
+            Usuario maria = new Usuario("Maria");
+            Leilao leilao = new Leilao("Playstation 3 Novo");
+
+            //When
+            Avaliador leiloeiro = new Avaliador();
+            leiloeiro.Avalia(leilao);
+
+            var maiores = leiloeiro.TresMaiores;
+
+            //Then
+            Assert.Equal(0, maiores.Count);
+        }
+
+        [Fact]
+        public void Should_crazy_math_more_then_thirty()
+        {
+            //Given
+            var valor = 32;
+            
+            //When
+            MatematicaMaluca matematicaMaluca = new MatematicaMaluca();
+            var result = matematicaMaluca.ContaMaluca(valor);
+
+            //Then
+            Assert.Equal(128, result);
+        }
+
+        [Fact]
+        public void Should_crazy_math_more_then_ten()
+        {
+            //Given
+            var valor = 15;
+            
+            //When
+            MatematicaMaluca matematicaMaluca = new MatematicaMaluca();
+            var result = matematicaMaluca.ContaMaluca(valor);
+
+            //Then
+            Assert.Equal(45, result);
+        }
+
+        [Fact]
+        public void Should_crazy_math_return_multiple_for_two()
+        {
+            //Given
+            var valor = 9;
+            
+            //When
+            MatematicaMaluca matematicaMaluca = new MatematicaMaluca();
+            var result = matematicaMaluca.ContaMaluca(valor);
+
+            //Then
+            Assert.Equal(18, result);
+        }
+
+        [Fact]
         public void Should_return_palindrome_is_true()
         {
             //Given
@@ -177,6 +290,82 @@ namespace Caelum.Leilao.Test
 
             //Then
             Assert.False(result_false);
+        }
+
+        [Fact]
+        public void DeveSelecionarLancesEntre1000E3000()
+        {
+            //Given
+            Usuario joao = new Usuario("Joao");
+            
+            //When
+            FiltroDeLances filtro = new FiltroDeLances();
+            IList<Lance> resultado = filtro.Filtra(new List<Lance>() { 
+                new Lance(joao,2000), 
+                new Lance(joao,1000), 
+                new Lance(joao,3000), 
+                new Lance(joao, 800)});
+
+            //Then
+            Assert.Equal(1, resultado.Count);
+            Assert.Equal(2000, resultado[0].Valor, 2);
+        }
+
+        [Fact]
+        public void DeveSelecionarLancesEntre500E700()
+        {
+            //Given
+            Usuario joao = new Usuario("Joao");
+
+            //When
+            FiltroDeLances filtro = new FiltroDeLances();
+            IList<Lance> resultado = filtro.Filtra(new List<Lance>() {
+                new Lance(joao,600), 
+                new Lance(joao,500), 
+                new Lance(joao,700), 
+                new Lance(joao, 800)});
+            
+            //Then
+            Assert.Equal(1, resultado.Count);
+            Assert.Equal(600, resultado[0].Valor, 2);
+        }
+
+        [Fact]
+        public void DeveSelecionarLancesMaior5000()
+        {
+            //Given
+            Usuario joao = new Usuario("Joao");
+
+            //When
+            FiltroDeLances filtro = new FiltroDeLances();
+            IList<Lance> resultado = filtro.Filtra(new List<Lance>() {
+                new Lance(joao,6000), 
+                new Lance(joao,5000), 
+                new Lance(joao,3500), 
+                new Lance(joao, 5800)});
+            
+            //Then
+            Assert.Equal(2, resultado.Count);
+            Assert.Equal(6000, resultado[0].Valor, 2);
+            Assert.Equal(5800, resultado[1].Valor, 2);
+        }
+
+        [Fact]
+        public void DeveSelecionarLancesMenor500()
+        {
+            //Given
+            Usuario joao = new Usuario("Joao");
+
+            //When
+            FiltroDeLances filtro = new FiltroDeLances();
+            IList<Lance> resultado = filtro.Filtra(new List<Lance>() {
+                new Lance(joao,60), 
+                new Lance(joao,50), 
+                new Lance(joao,35), 
+                new Lance(joao, 58)});
+            
+            //Then
+            Assert.Equal(0, resultado.Count);
         }
 
     }
