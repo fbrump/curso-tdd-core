@@ -54,6 +54,33 @@ namespace Caelum.Leilao.Test
         }
 
         [Fact]
+        public void Should_find_three_max_values()
+        {
+            //Given
+            Usuario joao = new Usuario("Joao");
+            Usuario maria = new Usuario("Maria");
+            Leilao leilao = new Leilao("Playstation 3 Novo");
+
+            leilao.Propoe(new Lance(joao, 100.0));
+            leilao.Propoe(new Lance(maria, 200.0));
+            leilao.Propoe(new Lance(joao, 300.0));
+            leilao.Propoe(new Lance(maria, 400.0));
+
+            //When
+            Avaliador leiloeiro = new Avaliador();
+            leiloeiro.Avalia(leilao);
+
+            var maiores = leiloeiro.TresMaiores;
+
+            //Then
+            Assert.Equal(3, maiores.Count);
+            Assert.Equal(400, maiores[0].Valor, 2);
+            Assert.Equal(300, maiores[1].Valor, 2);
+            Assert.Equal(200, maiores[2].Valor, 2);
+            
+        }
+
+        [Fact]
         public void Should_return_palindrome_is_true()
         {
             //Given
