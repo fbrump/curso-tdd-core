@@ -125,7 +125,7 @@ namespace Caelum.Leilao.Test
         }
 
         [Fact]
-        public void Should_process_code_with_throws_deascending_order()
+        public void Should_process_code_with_throws_descending_order()
         {
             //Given
             Usuario joao = new Usuario("Joao");
