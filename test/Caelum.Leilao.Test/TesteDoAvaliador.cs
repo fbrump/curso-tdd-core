@@ -2,11 +2,12 @@ namespace Caelum.Leilao.Test
 {
     using System;
     using Xunit;
+    using Caelum.Leilao;
 
     public class UnitTest1
     {
         [Fact]
-        public void ShouldProcessCode()
+        public void Should_process_code()
         {
             // 1st part: scenario (ARRANGE)
             Usuario joao = new Usuario("Joao");
@@ -26,9 +27,26 @@ namespace Caelum.Leilao.Test
             // 3rd part: validation (ASSERT)
             double maiorEsperado = 400;
             double menorEsperado = 250;
+            double mediaEsperada = 317;
 
             Assert.Equal(maiorEsperado, leiloeiro.MaiorLance);
             Assert.Equal(menorEsperado, leiloeiro.MenorLance);
+            Assert.Equal(mediaEsperada, Math.Ceiling(leiloeiro.MediaLance));
+
+        }
+
+        [Fact]
+        public void Should_return_palindrome()
+        {
+            //Given
+            var frase = "ama";
+
+            //When
+            Palindromo palindrome = new Palindromo();
+            var result = palindrome.EhPalindromo(frase);
+
+            //Then
+            Assert.Equal(true, result);
         }
 
     }
