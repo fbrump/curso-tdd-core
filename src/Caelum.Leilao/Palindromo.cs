@@ -12,7 +12,7 @@ namespace Caelum.Leilao
 
             for(int i = 0; i < fraseFiltrada.Length; i++) 
             {
-                if(fraseFiltrada[i] != fraseFiltrada[fraseFiltrada.Length -i]) 
+                if(fraseFiltrada[i] != fraseFiltrada[fraseFiltrada.Length -i -1]) 
                 {
                     return false;
                 }

@@ -39,7 +39,7 @@ namespace Caelum.Leilao.Test
         public void Should_return_palindrome()
         {
             //Given
-            var frase = "ama";
+            var frase = "civic";
 
             //When
             Palindromo palindrome = new Palindromo();
