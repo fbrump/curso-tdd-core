@@ -92,5 +92,31 @@ namespace Caelum.Leilao.Test
 
             Assert.Equal(11000, ultimoLance.Valor, 4);
         }
+
+        [Fact]
+        public void Should_double_throw()
+        {
+            //Given
+            Leilao leilao = new Leilao("Macbook Pro 15");
+            Usuario steveJobs = new Usuario("Steve Jobs");
+            Usuario billGates = new Usuario("Bill Gates");
+            
+            //When
+            leilao.Propoe(new Lance(steveJobs, 2000));
+            leilao.Propoe(new Lance(billGates, 3000));
+
+            leilao.Propoe(new Lance(steveJobs, 4000));
+            leilao.Propoe(new Lance(billGates, 5000));
+            
+            leilao.DobraLance(steveJobs);
+            
+            //Then
+            Assert.Equal(5, leilao.Lances.Count);
+            var ultimo = leilao.Lances.Count - 1;
+            Lance ultimoLance = leilao.Lances[ultimo];
+            
+            Assert.Equal(steveJobs, ultimoLance.Usuario);
+            Assert.Equal(8000, ultimoLance.Valor, 4);
+        }
     }
 }

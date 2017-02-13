@@ -1,5 +1,7 @@
 namespace Caelum.Leilao
 {
+    using System.Linq;
+    using System.Collections;
     using System.Collections.Generic;
 
     /// <summary>
@@ -59,6 +61,21 @@ namespace Caelum.Leilao
             }
 
             return total;
+        }
+
+        public void DobraLance (Usuario usuario)
+        {
+            Lance ultimoLance = this.ultimoLanceDo(usuario);
+            
+            if (ultimoLance != null)
+                this.Propoe(new Lance(usuario, ultimoLance.Valor * 2));
+        }
+
+        public Lance ultimoLanceDo(Usuario usuario)
+        {
+            return this.Lances
+                .Where(t => t.Usuario.Nome.Equals(usuario.Nome))
+                .LastOrDefault();
         }
     }
 }
