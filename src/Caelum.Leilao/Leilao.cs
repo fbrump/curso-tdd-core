@@ -34,7 +34,31 @@ namespace Caelum.Leilao
         /// <param name="lance">Throw</param>
         public void Propoe(Lance lance)
         {
-            this.Lances.Add(lance);
+            if (this.Lances.Count == 0 || 
+                this.podeDarLance(lance.Usuario))
+                this.Lances.Add(lance);
+        }
+
+        private bool podeDarLance(Usuario usuario)
+        {
+            return (!this.ultimoLanceDado().Usuario.Equals(usuario) &&
+                this.qtdDeLancesDo(usuario) < 5);
+        }
+
+        private Lance ultimoLanceDado()
+        {
+            return this.Lances[this.Lances.Count - 1];
+        }
+
+        private int qtdDeLancesDo(Usuario usuario)
+        {
+            int total = 0;
+            foreach (var l in this.Lances)
+            {
+                if (l.Usuario.Equals(usuario)) total ++;
+            }
+
+            return total;
         }
     }
 }
